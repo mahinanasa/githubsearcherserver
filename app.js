@@ -20,6 +20,7 @@ swaggerDocument = require('./swagger.json');
 //Redis Connection
 const redis_client = redis.createClient(config.redis_port , config.redis_host,);
 
+redis_client.auth("pe4fe8521c400ebbed14d404746ffe552d5e9fd5a4ae33382f76de8c9d53eac35");
 redis_client.on("ready", function () {
 
   console.log("Redis is ready");
