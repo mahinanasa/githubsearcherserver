@@ -11,13 +11,14 @@ let cors = require("cors");
 const redis = require('redis')
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+let env = process.env.NODE_ENV || 'development'
+let config = require(`./config/${env}.js`)
 
 swaggerDocument = require('./swagger.json');
 //setup port constants
-const port_redis = process.env.PORT || 6379;
 
-//configure redis client on port 6379
-const redis_client = redis.createClient(port_redis);
+//Redis Connection
+const redis_client = redis.createClient(config.redis_port , config.redis_host,);
 
 redis_client.on("ready", function () {
 

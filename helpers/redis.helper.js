@@ -1,9 +1,10 @@
 const asyncRedis = require("async-redis");
-
-const rClient = asyncRedis.createClient({
-	host: '127.0.0.1',
-	port: '6379'
-});
+let env = process.env.NODE_ENV || 'development'
+let config = require(`../config/${env}.js`)
+const rClient = asyncRedis.createClient(
+	config.redis_port ,
+	config.redis_host,
+);
 
 
 rClient.on("error", err => {

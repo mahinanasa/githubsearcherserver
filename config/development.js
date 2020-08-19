@@ -2,6 +2,7 @@
 
 module.exports = {
   env: 'development',
-  db: 'mongodb://localhost/Tododb',
-  port: process.env.PORT || 4000,
+  port: process.env.PORT || 5000,
+  redis_host: '127.0.0.1',
+  redis_port: 6379
 };

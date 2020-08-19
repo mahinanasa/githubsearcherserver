@@ -1,13 +1,13 @@
 const axios = require('axios')
 const apiResponse = require("../helpers/apiResponse");
 const redisHelper = require('./../helpers/redis.helper')
-
+const config = require('./../config')
 //Search For User, Repository
 
 exports.search = async (req, res) => {
 
 	try {
-
+		console.log("ss",config.name)
 		let { entityType, searchTxt } = req.body
 		let response = {}
 		let cachedResponse = JSON.parse(await redisHelper.get(`${searchTxt}_in_${entityType}`)) 
