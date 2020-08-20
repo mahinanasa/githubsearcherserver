@@ -5,6 +5,7 @@ const rClient = asyncRedis.createClient(
 	config.redis_port ,
 	config.redis_host,
 );
+rClient.auth("pe4fe8521c400ebbed14d404746ffe552d5e9fd5a4ae33382f76de8c9d53eac35");
 
 
 rClient.on("error", err => {
