@@ -7,12 +7,11 @@ const config = require('./../config')
 exports.search = async (req, res) => {
 
 	try {
-		console.log("ss",config.name)
 		let { entityType, searchTxt } = req.body
 		let response = {}
 		let cachedResponse = JSON.parse(await redisHelper.get(`${searchTxt}_in_${entityType}`)) 
 		if (cachedResponse === null) {
-			response = await axios.get(`https://api.github.com/search/${entityType}`, {
+			response = await axios.get(`${config.axios_baseUrl}/search/${entityType}`, {
 				params: {
 					q: searchTxt,
 					order: 'desc'

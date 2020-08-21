@@ -2,33 +2,33 @@ const asyncRedis = require("async-redis");
 let env = process.env.NODE_ENV || 'development'
 let config = require(`../config/${env}.js`)
 const rClient = asyncRedis.createClient(
-	config.redis_port ,
-	config.redis_host,
+  config.redis_port,
+  config.redis_host,
 );
-rClient.auth("pe4fe8521c400ebbed14d404746ffe552d5e9fd5a4ae33382f76de8c9d53eac35");
-
-
+if (config.env == 'production') {
+  rClient.auth(config.redis_auth);
+}
 rClient.on("error", err => {
-  // console.log("Redis error: ", err);
+  console.log("Redis error: ", err);
 });
 
-rClient.on("ready", function() {
+rClient.on("ready", function () {
   // console.log("Redis is ready");
 });
 
 const redisHelper = {
-  get : async (key)=>{
-  let cachedData = await rClient.get(key);
-  return JSON.parse(cachedData)
-},
-set:async(key,value)=>{
-  await rClient.setex(key, 7200, JSON.stringify(value));
-},
-flushAll:async (req,res)=>{
+  get: async (key) => {
+    let cachedData = await rClient.get(key);
+    return JSON.parse(cachedData)
+  },
+  set: async (key, value) => {
+    await rClient.setex(key, 7200, JSON.stringify(value));
+  },
+  flushAll: async (req, res) => {
 
-  await rClient.flushall();
- return res.json({message:'Done'})
-}
+    await rClient.flushall();
+    return res.json({ message: 'Done' })
+  }
 }
 
 
